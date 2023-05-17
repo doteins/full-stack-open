@@ -35,17 +35,26 @@ const Results = ({ good, neutral ,bad }) => {
   // Calculate the % of positive votes
   const percentage = total ? (good / total) * 100 : 0;
   // <ResultLine text={props.text} counter={props.counter} />
-  return (
-    <div>
-      <Display text={"Good"} counter={good} />
-      <Display text={"Neutral"} counter={neutral} />
-      <Display text={"Bad"} counter={bad} />
-      <Display text={"All"} counter={total} />
-      <Display text={"Average"} counter={avg} />
-      <Display text={"Percentage"} counter={`${percentage}%`} />
-    </div>
-  );
-};
+  if (total === 0) {
+    return (
+      <div>
+        <p>Nothing to see here yet</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <Display text={"Good"} counter={good} />
+        <Display text={"Neutral"} counter={neutral} />
+        <Display text={"Bad"} counter={bad} />
+        <Display text={"All"} counter={total} />
+        <Display text={"Average"} counter={avg} />
+        <Display text={"Percentage"} counter={`${percentage}%`} />
+      </div>
+    )
+  }
+}
+
 
 const App = () => {
   // Headers
