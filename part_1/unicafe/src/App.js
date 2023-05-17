@@ -9,52 +9,44 @@ const Header = ({ header }) => {
   );
 };
 
-// Display counter element
-const Display = ({ text, counter }) => (
-  <div>
-    {text} {counter}
-  </div>
-);
-
 // Button component
 const Button = ({ handleClick, text }) => {
   return <button onClick={handleClick}>{text}</button>;
 };
 
-// Result line component
-// const ResultLine = (props) => {
-//   <Display text={props.text} counter={props.counter} />
-// }
+// Display counter element
+const ResultLine = ({ text, counter }) => (
+  <div>
+    {text} {counter}
+  </div>
+);
 
 // Results component
-const Results = ({ good, neutral ,bad }) => {
-  // Calculate the total clicks
-  const total = good + neutral + bad;
+const Results = ({ good, neutral, bad, total }) => {
   // Average of good and bad votes
   const avg = total ? (good - bad) / total : 0;
   // Calculate the % of positive votes
   const percentage = total ? (good / total) * 100 : 0;
-  // <ResultLine text={props.text} counter={props.counter} />
+  // Conditional rendering
   if (total === 0) {
     return (
       <div>
         <p>Nothing to see here yet</p>
       </div>
-    )
+    );
   } else {
     return (
       <div>
-        <Display text={"Good"} counter={good} />
-        <Display text={"Neutral"} counter={neutral} />
-        <Display text={"Bad"} counter={bad} />
-        <Display text={"All"} counter={total} />
-        <Display text={"Average"} counter={avg} />
-        <Display text={"Percentage"} counter={`${percentage}%`} />
+        <ResultLine text={"Good"} counter={good} />
+        <ResultLine text={"Neutral"} counter={neutral} />
+        <ResultLine text={"Bad"} counter={bad} />
+        <ResultLine text={"All"} counter={total} />
+        <ResultLine text={"Average"} counter={avg} />
+        <ResultLine text={"Percentage"} counter={`${percentage}%`} />
       </div>
-    )
+    );
   }
-}
-
+};
 
 const App = () => {
   // Headers
@@ -93,7 +85,7 @@ const App = () => {
       <Button handleClick={increaseBad} text={"Bad"} />
 
       <Header header={secondHeader} />
-      <Results good={good} neutral={neutral} bad={bad} />
+      <Results good={good} neutral={neutral} bad={bad} total={total} />
     </div>
   );
 };
