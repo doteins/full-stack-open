@@ -14,6 +14,9 @@ The course is divided into several parts, each focusing on different topics and 
 - **Part 1**: Introduction to React
 
 
-Each part consists of multiple exercises and projects that build upon the concepts learned in the course. You can find the assignments number and their corresponding solutions in the respective part folders.
+Each part consists of multiple exercises and projects that build upon the concepts learned in the course. 
 
-Feel free to explore the code and assignments in this repository.
+## Usage
+
+You can find the assignments number and their corresponding solutions in the respective part folders. Each part may have its own README file with detailed instructions and explanations. Follow the instructions provided to set up and run the assignments or projects.
+
