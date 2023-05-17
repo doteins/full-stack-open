@@ -1,4 +1,4 @@
-## Part 0
+# Fundamentals of Web Development
 
 The diagrams provided illustrate the solution for Part 0 of the course. They demonstrate the sequence of actions and interactions between the browser and the server in different scenarios.
 

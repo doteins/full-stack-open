@@ -1,4 +1,4 @@
-# Fundamentals of Web Development
+# Introduction to React
 
 Solutions of part 1 exercises to this folder, one app per folder
 
