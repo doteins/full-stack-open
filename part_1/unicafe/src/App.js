@@ -21,6 +21,23 @@ const ResultLine = ({ text, counter }) => (
   </div>
 );
 
+// ResultsTable component
+const ResulstTable = ({ results }) => {
+  return (
+    <table>
+      <tbody>
+        {results.map(({ text, counter }) => (
+          // Each child in a list should have a unique "key" prop.
+          <tr key={text}>
+            <td>{text}</td>
+            <td>{counter}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
 // Results component
 const Results = ({ good, neutral, bad, total }) => {
   // Average of good and bad votes
@@ -35,14 +52,26 @@ const Results = ({ good, neutral, bad, total }) => {
       </div>
     );
   } else {
+    // Create a new array with the data pased to Reults component
+    const resultLines = [
+      { text: "Good", counter: good },
+      { text: "Neutral", counter: neutral },
+      { text: "Bad", counter: bad },
+      { text: "All", counter: total },
+      { text: "Average", counter: avg },
+      { text: "Positive Percentage", counter: `${percentage}%` },
+    ];
+
     return (
       <div>
-        <ResultLine text={"Good"} counter={good} />
+        {/* <ResultLine text={"Good"} counter={good} />
         <ResultLine text={"Neutral"} counter={neutral} />
         <ResultLine text={"Bad"} counter={bad} />
         <ResultLine text={"All"} counter={total} />
         <ResultLine text={"Average"} counter={avg} />
-        <ResultLine text={"Percentage"} counter={`${percentage}%`} />
+        <ResultLine text={"Percentage"} counter={`${percentage}%`} /> */}
+
+        <ResulstTable results={resultLines} />
       </div>
     );
   }
