@@ -1,4 +1,6 @@
-## Following diagrams are part of the solution for part 0
+## Part 0
+
+The diagrams provided illustrate the solution for Part 0 of the course. They demonstrate the sequence of actions and interactions between the browser and the server in different scenarios.
 
 ### 0.4 New note diagram:
 
