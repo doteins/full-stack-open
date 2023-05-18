@@ -1,13 +1,18 @@
 import { useState } from 'react'
 
-// Button component
-const Button = ({ handleClick, text }) => {
+// Header component
+const Header = ({ header }) => {
   return (
-  <>
-    <button onClick={handleClick}>{text}</button>
-  </>
-  )
+    <div>
+      <h2>{header}</h2>
+    </div>
+  );
 };
+
+const Anecdote = ({ anecdote }) => <p>{anecdote}</p>
+
+// Button component
+const Button = ({ handleClick, text }) => <button onClick={handleClick}>{text}</button>
 
 const ResultVotes = ({ votes }) => {
   return (
@@ -32,33 +37,42 @@ const App = () => {
   // Anecdote state
   const [selected, setSelected] = useState(0)
 
-  // Votes of anecdote
+  // Get random number passing a maximum
+  const randomAnecdote = () => {
+    const randomNumber = Math.floor(Math.random() * anecdotes.length)
+    setSelected(randomNumber)
+  }
+
+  // Votes of anecdote state
   const arrOfVotes = new Array(anecdotes.length)
   const [votes, setVotes] = useState(arrOfVotes.fill(0))
 
+  // New state require to show the anecdote with most votes
+  const [winnerVotes, setWinnerVotes] = useState(0);
+
+  // Handler event to update state of newVotes array
   const handleVote = () => {
     const newVotes = [...votes]
     newVotes[selected] += 1
     setVotes(newVotes)
+
+    if (votes[winnerVotes] < newVotes[selected]) {
+      setWinnerVotes(selected)
+    }
   }
 
-  // Get random number passing a maximum
-  const randomAnecdote = () => {
-    const randomNumber = Math.floor(Math.random() * anecdotes.length)
-    console.log(randomNumber);
-    setSelected(randomNumber)
-  }
-
-  // const voteForAnecdote = () => {
-  //   setCounter(votes + 1)
-  // }
 
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
+      <Header header={"Anecdote of the day"} />
+      <Anecdote anecdote={anecdotes[selected]} />
       <ResultVotes votes={votes[selected]} />
       <Button handleClick={handleVote} text={`Vote ${votes[selected]}`} />
       <Button handleClick={randomAnecdote} text={"Next anecdote!"} />
+
+      <Header header={"Anecdote with most votes"} />
+      <Anecdote anecdote={anecdotes[winnerVotes]} />
+      <ResultVotes votes={votes[winnerVotes]} />
     </div>
   )
 }
