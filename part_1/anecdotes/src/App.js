@@ -3,11 +3,19 @@ import { useState } from 'react'
 // Button component
 const Button = ({ handleClick, text }) => {
   return (
-  <div>
+  <>
     <button onClick={handleClick}>{text}</button>
-  </div>
+  </>
   )
 };
+
+const ResultVotes = ({ votes }) => {
+  return (
+    <div>
+      <p>This anecdote has {votes} votes</p>
+    </div>
+  )
+}
 
 const App = () => {
   const anecdotes = [
@@ -21,7 +29,18 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
+  // Anecdote state
   const [selected, setSelected] = useState(0)
+
+  // Votes of anecdote
+  const arrOfVotes = new Array(anecdotes.length)
+  const [votes, setVotes] = useState(arrOfVotes.fill(0))
+
+  const handleVote = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1
+    setVotes(newVotes)
+  }
 
   // Get random number passing a maximum
   const randomAnecdote = () => {
@@ -30,9 +49,15 @@ const App = () => {
     setSelected(randomNumber)
   }
 
+  // const voteForAnecdote = () => {
+  //   setCounter(votes + 1)
+  // }
+
   return (
     <div>
-      {anecdotes[selected]}
+      <p>{anecdotes[selected]}</p>
+      <ResultVotes votes={votes[selected]} />
+      <Button handleClick={handleVote} text={`Vote ${votes[selected]}`} />
       <Button handleClick={randomAnecdote} text={"Next anecdote!"} />
     </div>
   )
