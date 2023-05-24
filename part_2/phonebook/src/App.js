@@ -27,8 +27,6 @@ const App = () => {
   ]) 
   const [newName, setNewName] = useState('')
 
-  console.log("Persons: ",persons);
-
   // Handle button click event
   const addContact = (event) => {
     event.preventDefault()
@@ -38,11 +36,15 @@ const App = () => {
       name: newName
     }
 
-    console.log(personObject);
+    // Some method checks wheter person name already exists in array or not (true || false)
+    const personInArray = persons.some(person => person.name === personObject.name)
 
-    setPersons(persons.concat(personObject))
-    setNewName("")
-    console.log(persons.concat(personObject));
+    if (personInArray) {
+      alert(`${newName} is already listed on your phonebook`)
+    } else {
+      setPersons(persons.concat(personObject))
+      setNewName("")
+    }
   }
 
   // Handle event handler to change update phonebook
