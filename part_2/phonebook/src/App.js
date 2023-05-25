@@ -1,88 +1,128 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-const Header = ({text}) => {
+const Header = ({ text }) => {
   return (
     <>
       <h2>{text}</h2>
     </>
-  )
-}
+  );
+};
 
-const Person = ({ persons }) => {
-  console.log("From person component ",persons);
+const Person = ({ persons, foundPerson}) => {
+  console.log("From person component ", persons);
   return (
     <>
-      {
-        persons.map(person => {
-          return <li key={person.name}>{person.name} {person.number}</li>
-        })
-      }
+      {foundPerson.map((person) => {
+        return (
+          <li key={person.name}>
+            {person.name} {person.number}
+          </li>
+        );
+      })}
     </>
-  )
-}
+  );
+};
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: "040-1234567"}
-  ])
+  //  Dummy data in array
+  const dummyData = [
+    { name: "Arto Hellas", number: "040-123456", id: 1 },
+    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
+    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
+    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
+  ];
 
-  // Set new person name
-  const [newName, setNewName] = useState('')
+  // State variables
+  const [persons, setPersons] = useState(dummyData);
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
+  const [searchText, setSearchText] = useState("");
 
-  // Set new person's number
-  const [newNumber, setNewNumber] = useState('')
+  // // Event handlers
+  const handleNewName = (event) => {
+    setNewName(event.target.value);
+  };
 
-  // Handle button click event
+  const handleNewNumber = (event) => {
+    setNewNumber(event.target.value);
+  };
+
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+    setSearchText(event.target.value);
+  };
+
   const addContact = (event) => {
-    event.preventDefault()
-    console.log('button clicked', event.target)
+    event.preventDefault();
 
+    // Create a new person object using the values from the input fields
     const personObject = {
       name: newName,
-      number: newNumber
-    }
+      number: newNumber,
+    };
 
-    // Some method checks wheter person name already exists in array or not (true || false)
-    const nameInArray = persons.some(person => person.name === personObject.name)
+    // Check if the person's name already exists in the persons array
+    const nameInArray = persons.some(
+      (person) => person.name === personObject.name
+    );
 
+    
     if (nameInArray) {
-      alert(`${newName} is already listed on your phonebook`)
-    } else {
-      setPersons(persons.concat(personObject))
-      setNewName("")
-      setNewNumber("")
+      alert(`${newName} is already listed on your phonebook`);
+    } else {  // If the name doesn't exist, add the person to the persons array
+      setPersons(persons.concat(personObject));
+
+      // Reset the input field values to empty strings
+      setNewName("");
+      setNewNumber("");
     }
-  }
+  };
 
-  // Event handler to add new person name
-  const handleNewName = (event) => {
-    console.log(event.target.value)
-    setNewName(event.target.value)
-  }
+  // Filter the persons based on the search text
+  const foundPerson = searchText
+    ? persons.filter(
+        (person) =>
+          person.name.toLocaleLowerCase().startsWith(searchText.toLocaleLowerCase())
+      )
+    : persons;
 
-  // Event handler to add new number
-  const handleNewNumber = (event) => {
-    console.log(event.target.value)
-    setNewNumber(event.target.value)
-  }
 
   return (
     <div>
-      <Header text={"Phonebook"}/>
+      <Header text={"Phonebook"} />
+      <div>
+        Filter by{" "}
+        <input value={searchText} onChange={handleSearch} placeholder="name" />
+      </div>
+      <Header text={"Add a new contact"} />
       <form onSubmit={addContact}>
-        <div>Name: <input value={newName} onChange={handleNewName}/></div>
-        <div>Number: <input value={newNumber} onChange={handleNewNumber}/></div>
+        <div>
+          <input
+            type="text"
+            value={newName}
+            onChange={handleNewName}
+            placeholder="Name"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            value={newNumber}
+            onChange={handleNewNumber}
+            placeholder="Phone number"
+          />
+        </div>
         <div>
           <button type="submit">Add</button>
         </div>
       </form>
-      <Header text={"Numbers"}/>
+      <Header text={"Numbers"} />
       <ul>
-        <Person persons={persons} />
+        <Person persons={persons} foundPerson={foundPerson}/>
       </ul>
-      <div>debug: {newName}</div>
+      {/* <div>debug: {newName}</div> */}
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
