@@ -8,8 +8,8 @@ const Header = ({ text }) => {
   );
 };
 
-const Person = ({ persons, foundPerson}) => {
-  console.log("From person component ", persons);
+const Persons = ({ foundPerson }) => {
+  console.log("From person component ", foundPerson);
   return (
     <>
       {foundPerson.map((person) => {
@@ -22,6 +22,15 @@ const Person = ({ persons, foundPerson}) => {
     </>
   );
 };
+
+// Search input component
+const SearchInput = ({value, onChange}) => {
+  return (
+    <div>
+      Filter by <input value={value} onChange={onChange} placeholder="name" />
+    </div>
+  )
+}
 
 const App = () => {
   //  Dummy data in array
@@ -86,14 +95,12 @@ const App = () => {
       )
     : persons;
 
+  
 
   return (
     <div>
       <Header text={"Phonebook"} />
-      <div>
-        Filter by{" "}
-        <input value={searchText} onChange={handleSearch} placeholder="name" />
-      </div>
+      <SearchInput value={searchText} onChange={handleSearch} />
       <Header text={"Add a new contact"} />
       <form onSubmit={addContact}>
         <div>
@@ -118,7 +125,7 @@ const App = () => {
       </form>
       <Header text={"Numbers"} />
       <ul>
-        <Person persons={persons} foundPerson={foundPerson}/>
+        <Persons foundPerson={foundPerson}/>
       </ul>
       {/* <div>debug: {newName}</div> */}
     </div>
