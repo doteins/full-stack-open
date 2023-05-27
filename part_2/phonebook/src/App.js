@@ -1,36 +1,5 @@
 import { useState } from "react";
-
-const Header = ({ text }) => {
-  return (
-    <>
-      <h2>{text}</h2>
-    </>
-  );
-};
-
-const Persons = ({ foundPerson }) => {
-  console.log("From person component ", foundPerson);
-  return (
-    <>
-      {foundPerson.map((person) => {
-        return (
-          <li key={person.name}>
-            {person.name} {person.number}
-          </li>
-        );
-      })}
-    </>
-  );
-};
-
-// Search input component
-const SearchInput = ({value, onChange}) => {
-  return (
-    <div>
-      Filter by <input value={value} onChange={onChange} placeholder="name" />
-    </div>
-  )
-}
+import { Header, SearchInput, Form, Persons } from "./components/Phonebook";
 
 const App = () => {
   //  Dummy data in array
@@ -75,10 +44,10 @@ const App = () => {
       (person) => person.name === personObject.name
     );
 
-    
     if (nameInArray) {
       alert(`${newName} is already listed on your phonebook`);
-    } else {  // If the name doesn't exist, add the person to the persons array
+    } else {
+      // If the name doesn't exist, add the person to the persons array
       setPersons(persons.concat(personObject));
 
       // Reset the input field values to empty strings
@@ -89,20 +58,28 @@ const App = () => {
 
   // Filter the persons based on the search text
   const foundPerson = searchText
-    ? persons.filter(
-        (person) =>
-          person.name.toLocaleLowerCase().startsWith(searchText.toLocaleLowerCase())
+    ? persons.filter((person) =>
+        person.name
+          .toLocaleLowerCase()
+          .startsWith(searchText.toLocaleLowerCase())
       )
     : persons;
 
-  
+
 
   return (
     <div>
       <Header text={"Phonebook"} />
-      <SearchInput value={searchText} onChange={handleSearch} />
+      <SearchInput searchText={searchText} handleSearch={handleSearch} />
       <Header text={"Add a new contact"} />
-      <form onSubmit={addContact}>
+      <Form
+        addContact={addContact}
+        newName={newName}
+        handleNewName={handleNewName}
+        newNumber={newNumber}
+        handleNewNumber={handleNewNumber}
+      />
+      {/* <form onSubmit={addContact}>
         <div>
           <input
             type="text"
@@ -122,10 +99,10 @@ const App = () => {
         <div>
           <button type="submit">Add</button>
         </div>
-      </form>
+      </form> */}
       <Header text={"Numbers"} />
       <ul>
-        <Persons foundPerson={foundPerson}/>
+        <Persons foundPerson={foundPerson} />
       </ul>
       {/* <div>debug: {newName}</div> */}
     </div>
