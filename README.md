@@ -10,6 +10,7 @@ The course is divided into several parts, each focusing on different topics and 
 
 - **Part 0**: Fundamentals of Web Development
 - **Part 1**: Introduction to React
+- **Part 2**: Communicating with server
 
 
 Each part consists of multiple exercises and projects that build upon the concepts learned in the course. 
